@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 import AddTasks from "./components/AddTasks";
+import Heading from "./components/Heading";
+import Section from "./components/Section";
 import TaskLists from "./components/TaskLists";
 
 function App() {
@@ -42,6 +44,26 @@ function App() {
         onDeleteTask={handleDeleteTask}
         tasks={tasks}
       />
+
+      <h1 style={{ marginTop: "80px" }}>Context Theory with Heading Example</h1>
+      <Section level={1}>
+        <Heading>Title</Heading>
+        <Section level={2}>
+          <Heading>Heading</Heading>
+          <Heading>Heading</Heading>
+          <Heading>Heading</Heading>
+          <Section level={3}>
+            <Heading>Sub-heading</Heading>
+            <Heading>Sub-heading</Heading>
+            <Heading>Sub-heading</Heading>
+            <Section level={4}>
+              <Heading>Sub-sub-heading</Heading>
+              <Heading>Sub-sub-heading</Heading>
+              <Heading>Sub-sub-heading</Heading>
+            </Section>
+          </Section>
+        </Section>
+      </Section>
     </>
   );
 }
