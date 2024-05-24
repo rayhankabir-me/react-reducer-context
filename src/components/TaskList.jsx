@@ -1,19 +1,23 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-export default function TaskList({ tasks, onDeleteTask, onChangeTask }) {
+import { useContext, useState } from "react";
+import { TasksContext, TasksDispatchContext } from "../utils/TasksContext";
+export default function TaskList() {
+  const tasks = useContext(TasksContext);
   return (
     <ul>
       {tasks.map((task) => (
         <li key={task.id}>
-          <Task task={task} onDelete={onDeleteTask} onChange={onChangeTask} />
+          <Task task={task} />
         </li>
       ))}
     </ul>
   );
 }
 
-function Task({ task, onDelete, onChange }) {
+function Task({ task }) {
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useContext(TasksDispatchContext);
+
   let taskContent;
   if (isEditing) {
     taskContent = (
@@ -21,9 +25,12 @@ function Task({ task, onDelete, onChange }) {
         <input
           value={task.text}
           onChange={(e) => {
-            onChange({
-              ...task,
-              text: e.target.value,
+            dispatch({
+              type: "changed",
+              task: {
+                ...task,
+                text: e.target.value,
+              },
             });
           }}
         />
@@ -44,14 +51,26 @@ function Task({ task, onDelete, onChange }) {
         type="checkbox"
         checked={task.done}
         onChange={(e) => {
-          onChange({
-            ...task,
-            done: e.target.checked,
+          dispatch({
+            type: "changed",
+            task: {
+              ...task,
+              done: e.target.checked,
+            },
           });
         }}
       />
       {taskContent}
-      <button onClick={() => onDelete(task.id)}>Delete</button>
+      <button
+        onClick={() => {
+          dispatch({
+            type: "deleted",
+            id: task.id,
+          });
+        }}
+      >
+        Delete
+      </button>
     </label>
   );
 }

@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-export default function AddTask({ onAddTask }) {
+import { useContext, useState } from "react";
+import { TasksDispatchContext } from "../utils/TasksContext";
+export default function AddTask() {
   const [text, setText] = useState("");
+
+  const dispatch = useContext(TasksDispatchContext);
 
   return (
     <>
@@ -14,7 +17,11 @@ export default function AddTask({ onAddTask }) {
       <button
         onClick={() => {
           setText("");
-          onAddTask(text);
+          dispatch({
+            type: "added",
+            id: nextId++,
+            text: text,
+          });
         }}
       >
         Add Task
@@ -22,3 +29,5 @@ export default function AddTask({ onAddTask }) {
     </>
   );
 }
+
+let nextId = 3;
