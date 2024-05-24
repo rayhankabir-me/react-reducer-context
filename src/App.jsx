@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useImmerReducer } from "use-immer";
 import "./App.css";
 import AddTask from "./components/AddTask";
 import Heading from "./components/Heading";
@@ -7,7 +7,7 @@ import TaskList from "./components/TaskList";
 import tasksReducer from "./utils/tasksReducer.js";
 
 function App() {
-  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+  const [tasks, dispatch] = useImmerReducer(tasksReducer, initialTasks);
 
   function handleAddTask(text) {
     dispatch({
