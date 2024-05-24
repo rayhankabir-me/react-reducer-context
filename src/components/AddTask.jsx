@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-export default function AddTasks({ onAddTask }) {
+export default function AddTask({ onAddTask }) {
   const [text, setText] = useState("");
+
   return (
-    <div>
+    <>
       <input
-        placeholder="Add task"
+        type="text"
         value={text}
+        placeholder="Task Name"
         onChange={(e) => setText(e.target.value)}
       />
       <button
@@ -17,6 +19,6 @@ export default function AddTasks({ onAddTask }) {
       >
         Add Task
       </button>
-    </div>
+    </>
   );
 }

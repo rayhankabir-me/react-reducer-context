@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./App.css";
-import AddTasks from "./components/AddTasks";
+import AddTask from "./components/AddTask";
 import Heading from "./components/Heading";
 import Section from "./components/Section";
-import TaskLists from "./components/TaskLists";
+import TaskList from "./components/TaskList";
 
 function App() {
   const [tasks, setTasks] = useState(initialTasks);
@@ -12,18 +12,14 @@ function App() {
     setTasks([
       ...tasks,
       {
-        id: nextId++,
+        id: nextId,
         text: text,
         done: false,
       },
     ]);
   }
 
-  function handleDeleteTask(taskId) {
-    setTasks(tasks.filter((t) => t.id !== taskId));
-  }
-
-  function onChangeTask(task) {
+  function handleChangeTask(task) {
     setTasks(
       tasks.map((t) => {
         if (t.id === task.id) {
@@ -35,14 +31,17 @@ function App() {
     );
   }
 
+  function handleDeleteTask(taskId) {
+    setTasks(tasks.filter((t) => t.id !== taskId));
+  }
   return (
     <>
       <h1>Tasks Manager App</h1>
-      <AddTasks onAddTask={handleAddTask} />
-      <TaskLists
-        onChangeTask={onChangeTask}
-        onDeleteTask={handleDeleteTask}
+      <AddTask onAddTask={handleAddTask} />
+      <TaskList
         tasks={tasks}
+        onDeleteTask={handleDeleteTask}
+        onChangeTask={handleChangeTask}
       />
 
       <h1 style={{ marginTop: "80px" }}>Context Theory with Heading Example</h1>

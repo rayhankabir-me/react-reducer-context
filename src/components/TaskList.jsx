@@ -1,34 +1,27 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-export default function TaskLists({ tasks, onDeleteTask, onChangeTask }) {
+export default function TaskList({ tasks, onDeleteTask, onChangeTask }) {
   return (
     <ul>
       {tasks.map((task) => (
         <li key={task.id}>
-          <Task
-            onChangeTask={onChangeTask}
-            onDeleteTask={onDeleteTask}
-            task={task}
-          />
+          <Task task={task} onDelete={onDeleteTask} onChange={onChangeTask} />
         </li>
       ))}
     </ul>
   );
 }
 
-function Task({ task, onDeleteTask, onChangeTask }) {
+function Task({ task, onDelete, onChange }) {
   const [isEditing, setIsEditing] = useState(false);
-
   let taskContent;
-
   if (isEditing) {
     taskContent = (
       <>
         <input
-          type="text"
           value={task.text}
           onChange={(e) => {
-            onChangeTask({
+            onChange({
               ...task,
               text: e.target.value,
             });
@@ -51,14 +44,14 @@ function Task({ task, onDeleteTask, onChangeTask }) {
         type="checkbox"
         checked={task.done}
         onChange={(e) => {
-          onChangeTask({
+          onChange({
             ...task,
             done: e.target.checked,
           });
         }}
       />
       {taskContent}
-      <button onClick={() => onDeleteTask(task.id)}>Delete</button>
+      <button onClick={() => onDelete(task.id)}>Delete</button>
     </label>
   );
 }
